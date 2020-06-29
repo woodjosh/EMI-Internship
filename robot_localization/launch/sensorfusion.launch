@@ -1,0 +1,28 @@
+<launch>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>  
+
+  <!-- turtlebot bringup -->
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
+    <arg name="model" value="$(arg model)"/>
+  </include>
+
+  <!-- ground truth position -->	
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_gnd" clear_params="true">
+    <remap from="/odometry/filtered" to="/localization/gnd_truth"/>
+    <rosparam command="load" file="$(find robot_localization)/params/gndtruth.yaml" />
+  </node>
+
+  <!-- imu estimate of the position -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_imu" clear_params="true">
+    <remap from="/odometry/filtered" to="/localization/imu"/>
+    <rosparam command="load" file="$(find robot_localization)/params/imu.yaml" />
+  </node>
+
+  <!-- camera estimate of the position -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_imu" clear_params="true">
+    <remap from="/odometry/filtered" to="/localization/imu"/>
+    <rosparam command="load" file="$(find robot_localization)/params/i.yaml" />
+  </node>
+  
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_localization)/rviz/turtlebot_robot_localization.rviz"/>
+</launch>
