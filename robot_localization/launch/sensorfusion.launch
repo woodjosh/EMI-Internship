@@ -6,6 +6,12 @@
     <arg name="model" value="$(arg model)"/>
   </include>
 
+  <!-- launch orb_slam2 -->
+  <include file="$(find orb_slam2_ros)/ros/launch/orb_slam2_r200_mono.launch"/>
+
+  <!-- my node to add covariance to orb_slam2 output --> 
+  <node pkg="my_pkgs" type="add_cov" name="orb_cov" clear_params="true"/>
+
   <!-- ground truth position -->	
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_gnd" clear_params="true">
     <remap from="/odometry/filtered" to="/localization/gnd_truth"/>
@@ -16,13 +22,16 @@
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_imu" clear_params="true">
     <remap from="/odometry/filtered" to="/localization/imu"/>
     <rosparam command="load" file="$(find robot_localization)/params/imu.yaml" />
-  </node>
+  </node> 
+  
+  <!-- publish transform between map and odom -->
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0 1.0 map odom 100" />
 
   <!-- camera estimate of the position -->
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_imu" clear_params="true">
-    <remap from="/odometry/filtered" to="/localization/imu"/>
-    <rosparam command="load" file="$(find robot_localization)/params/i.yaml" />
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_orbslam" clear_params="true">
+    <remap from="/odometry/filtered" to="/localization/orbslam"/>
+    <rosparam command="load" file="$(find robot_localization)/params/orbslam.yaml" />
   </node>
-  
+
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_localization)/rviz/turtlebot_robot_localization.rviz"/>
 </launch>
