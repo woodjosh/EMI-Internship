@@ -33,5 +33,6 @@
     <rosparam command="load" file="$(find robot_localization)/params/orbslam.yaml" />
   </node>
 
+  <!-- visualize results --> 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_localization)/rviz/turtlebot_robot_localization.rviz"/>
 </launch>

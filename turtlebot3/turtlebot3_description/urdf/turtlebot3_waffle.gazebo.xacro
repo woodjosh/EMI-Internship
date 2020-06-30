@@ -91,45 +91,30 @@
       <rpyOffsets>0 0 0</rpyOffsets>
     </plugin>
   </gazebo>
+  
+  <gazebo>
+    <plugin name="imu_plugin" filename="libhector_gazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>200.0</updateRate>        
+      <bodyName>imu_link</bodyName>	
+      <topicName>imu</topicName>
 
-  <gazebo reference="imu_link">
-    <gravity>true</gravity>
-    <sensor name="imu_sensor" type="imu">
-      <always_on>true</always_on>
-      <update_rate>200</update_rate>
-      <visualize>true</visualize>
-      <topic>__default_topic__</topic>
-      <imu>
-        <noise>
-          <type>gaussian</type>
-          <rate>
-            <mean>0.0</mean>
-            <stddev>2e-4</stddev>
-            <bias_mean>0.0</bias_mean>
-            <bias_stddev>0.0000008</bias_stddev>
-          </rate>
-          <accel>
-            <mean>0.0</mean>
-            <stddev>1.7e-2</stddev>
-            <bias_mean>0.0</bias_mean>
-            <bias_stddev>0.001</bias_stddev>
-          </accel>
-        </noise>
-      </imu>
-      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-        <topicName>imu</topicName>
-        <bodyName>imu_link</bodyName>
-        <updateRateHZ>200.0</updateRateHZ>
-        <gaussianNoise>0.0</gaussianNoise>
-        <xyzOffset>0 0 0</xyzOffset>
-        <rpyOffset>0 0 0</rpyOffset>
-        <frameName>imu_link</frameName>
-        <initialOrientationAsReference>false</initialOrientationAsReference>
-      </plugin>
-      <pose>0 0 0 0 0 0</pose>
-    </sensor>
+      <accelOffset>0 0 0</accelOffset>
+      <accelDrift>0 0 0</accelDrift>
+      <accelDriftFrequency>0 0 0</accelDriftFrequency>
+      <accelGaussianNoise>0 0 0</accelGaussianNoise>     
+
+      <rateOffset>0 0 0</rateOffset>
+      <rateDrift>0 0 0</rateDrift>
+      <rateDriftFrequency>0 0 0</rateDriftFrequency>
+      <rateGaussianNoise>0 0 0</rateGaussianNoise>   
+
+      <yawOffset>0 0 0</yawOffset>
+      <yawDrift>0 0 0</yawDrift>
+      <yawDriftFrequency>0 0 0</yawDriftFrequency>
+      <yawGaussianNoise>0 0 0</yawGaussianNoise>   
+    </plugin>    
   </gazebo>
-
 
   <gazebo reference="base_scan">
     <material>Gazebo/FlatBlack</material>

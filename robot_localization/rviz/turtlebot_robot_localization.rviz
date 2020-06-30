@@ -7,7 +7,6 @@ Panels:
         - /Global Options1
         - /Status1
         - /IMU_Odom1/Shape1
-        - /GND_Odom1/Shape1
         - /VIS_Odom1/Shape1
       Splitter Ratio: 0.5
     Tree Height: 755
@@ -71,22 +70,22 @@ Visualization Manager:
           Color: 204; 51; 204
           Scale: 1
           Value: true
-        Value: false
+        Value: true
       Enabled: true
       Keep: 500
-      Name: IMU_Odom
+      Name: GND_Odom
       Position Tolerance: 0.10000000149011612
       Shape:
         Alpha: 1
         Axes Length: 1
         Axes Radius: 0.10000000149011612
-        Color: 255; 25; 0
+        Color: 32; 74; 135
         Head Length: 0.10000000149011612
         Head Radius: 0.10000000149011612
         Shaft Length: 0.20000000298023224
         Shaft Radius: 0.05000000074505806
         Value: Arrow
-      Topic: /localization/imu
+      Topic: /localization/gnd_truth
       Unreliable: false
       Value: true
     - Angle Tolerance: 0.10000000149011612
@@ -105,22 +104,22 @@ Visualization Manager:
           Color: 204; 51; 204
           Scale: 1
           Value: true
-        Value: true
+        Value: false
       Enabled: true
       Keep: 500
-      Name: GND_Odom
+      Name: IMU_Odom
       Position Tolerance: 0.10000000149011612
       Shape:
         Alpha: 1
         Axes Length: 1
         Axes Radius: 0.10000000149011612
-        Color: 32; 74; 135
+        Color: 255; 25; 0
         Head Length: 0.10000000149011612
         Head Radius: 0.10000000149011612
         Shaft Length: 0.20000000298023224
         Shaft Radius: 0.05000000074505806
         Value: Arrow
-      Topic: /localization/gnd_truth
+      Topic: /localization/imu
       Unreliable: false
       Value: true
     - Angle Tolerance: 0.10000000149011612
