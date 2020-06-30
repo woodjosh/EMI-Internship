@@ -102,17 +102,17 @@
       <accelOffset>0 0 0</accelOffset>
       <accelDrift>0 0 0</accelDrift>
       <accelDriftFrequency>0 0 0</accelDriftFrequency>
-      <accelGaussianNoise>0 0 0</accelGaussianNoise>     
+      <accelGaussianNoise>1e-4 1e-4 1e-4</accelGaussianNoise>     
 
       <rateOffset>0 0 0</rateOffset>
       <rateDrift>0 0 0</rateDrift>
       <rateDriftFrequency>0 0 0</rateDriftFrequency>
-      <rateGaussianNoise>0 0 0</rateGaussianNoise>   
+      <rateGaussianNoise>1e-4 1e-4 1e-4</rateGaussianNoise>   
 
       <yawOffset>0 0 0</yawOffset>
       <yawDrift>0 0 0</yawDrift>
       <yawDriftFrequency>0 0 0</yawDriftFrequency>
-      <yawGaussianNoise>0 0 0</yawGaussianNoise>   
+      <yawGaussianNoise>1e-4 1e-4 1e-4</yawGaussianNoise>   
     </plugin>    
   </gazebo>
 

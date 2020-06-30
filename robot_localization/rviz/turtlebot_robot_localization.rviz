@@ -6,8 +6,10 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /GND_Odom1/Shape1
         - /IMU_Odom1/Shape1
         - /VIS_Odom1/Shape1
+        - /VIO_Odom1/Shape1
       Splitter Ratio: 0.5
     Tree Height: 755
   - Class: rviz/Selection
@@ -70,7 +72,7 @@ Visualization Manager:
           Color: 204; 51; 204
           Scale: 1
           Value: true
-        Value: true
+        Value: false
       Enabled: true
       Keep: 500
       Name: GND_Odom
@@ -79,7 +81,7 @@ Visualization Manager:
         Alpha: 1
         Axes Length: 1
         Axes Radius: 0.10000000149011612
-        Color: 32; 74; 135
+        Color: 78; 154; 6
         Head Length: 0.10000000149011612
         Head Radius: 0.10000000149011612
         Shaft Length: 0.20000000298023224
@@ -140,20 +142,54 @@ Visualization Manager:
           Value: true
         Value: false
       Enabled: true
-      Keep: 100
+      Keep: 500
       Name: VIS_Odom
       Position Tolerance: 0.10000000149011612
       Shape:
         Alpha: 1
         Axes Length: 1
         Axes Radius: 0.10000000149011612
-        Color: 115; 210; 22
+        Color: 52; 101; 164
         Head Length: 0.10000000149011612
         Head Radius: 0.10000000149011612
         Shaft Length: 0.20000000298023224
         Shaft Radius: 0.05000000074505806
         Value: Arrow
       Topic: /localization/orbslam
+      Unreliable: false
+      Value: true
+    - Angle Tolerance: 0.10000000149011612
+      Class: rviz/Odometry
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+          Color: 255; 255; 127
+          Color Style: Unique
+          Frame: Local
+          Offset: 1
+          Scale: 1
+          Value: true
+        Position:
+          Alpha: 0.30000001192092896
+          Color: 204; 51; 204
+          Scale: 1
+          Value: true
+        Value: false
+      Enabled: true
+      Keep: 500
+      Name: VIO_Odom
+      Position Tolerance: 0.10000000149011612
+      Shape:
+        Alpha: 1
+        Axes Length: 1
+        Axes Radius: 0.10000000149011612
+        Color: 92; 53; 102
+        Head Length: 0.10000000149011612
+        Head Radius: 0.10000000149011612
+        Shaft Length: 0.20000000298023224
+        Shaft Radius: 0.05000000074505806
+        Value: Arrow
+      Topic: /localization/vio
       Unreliable: false
       Value: true
   Enabled: true
@@ -184,25 +220,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 14.876792907714844
+      Distance: 7.157708168029785
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.20031945407390594
-        Y: 1.8547717332839966
-        Z: -1.4711885452270508
+        X: -0.23500190675258636
+        Y: 1.7288427352905273
+        Z: -0.6448055505752563
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.144796371459961
+      Pitch: 1.0447964668273926
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.380411148071289
+      Yaw: 5.895423889160156
     Saved: ~
 Window Geometry:
   Displays:

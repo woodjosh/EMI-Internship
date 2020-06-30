@@ -11,28 +11,34 @@
 
   <!-- my node to add covariance to orb_slam2 output --> 
   <node pkg="my_pkgs" type="add_cov" name="orb_cov" clear_params="true"/>
+  
+  <!-- publish transform between map and odom -->
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0 1.0 map odom 100" />
 
   <!-- ground truth position -->	
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_gnd" clear_params="true">
     <remap from="/odometry/filtered" to="/localization/gnd_truth"/>
     <rosparam command="load" file="$(find robot_localization)/params/gndtruth.yaml" />
   </node>
-
+<?ignore
   <!-- imu estimate of the position -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_imu" clear_params="true">
     <remap from="/odometry/filtered" to="/localization/imu"/>
     <rosparam command="load" file="$(find robot_localization)/params/imu.yaml" />
   </node> 
-  
-  <!-- publish transform between map and odom -->
-  <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0 1.0 map odom 100" />
 
   <!-- camera estimate of the position -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_orbslam" clear_params="true">
     <remap from="/odometry/filtered" to="/localization/orbslam"/>
     <rosparam command="load" file="$(find robot_localization)/params/orbslam.yaml" />
   </node>
-
+?>
+  <!-- imu+camera estimate of the position -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_vio" clear_params="true">
+    <remap from="/odometry/filtered" to="/localization/vio"/>
+    <rosparam command="load" file="$(find robot_localization)/params/vio.yaml" />
+  </node> 
+  
   <!-- visualize results --> 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_localization)/rviz/turtlebot_robot_localization.rviz"/>
 </launch>

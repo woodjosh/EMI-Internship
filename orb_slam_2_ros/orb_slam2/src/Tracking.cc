@@ -36,7 +36,9 @@
 #include<iostream>
 
 #include<mutex>
-
+//***my includes***
+#include "nav_msgs/Odometry.h"
+//***end my includes***
 
 using namespace std;
 
@@ -602,14 +604,41 @@ void Tracking::MonocularInitialization()
                     nmatches--;
                 }
             }
+            // ***My addition***
+            // Get current pose from robot_localization node   
+	    cout << "Getting Current Odometry"<< endl; 
+            int argc; 
+            char **argv; 
+            ros::init(argc,argv,"odom_listener");
+            ros::NodeHandle n;
 
-            // Set Frame Poses
-            mInitialFrame.SetPose(cv::Mat::eye(4,4,CV_32F));
+ 	    boost::shared_ptr<nav_msgs::Odometry const> sharedOdom;
+  	    nav_msgs::Odometry odom;
+ 	    sharedOdom = ros::topic::waitForMessage<nav_msgs::Odometry>("/localization/vio",n);
+	    ros::Rate loop_rate(10); 
+  	    if(sharedOdom != NULL){
+  	      odom = *sharedOdom;
+ 	     }
+	    double x = odom.pose.pose.position.x; 
+	    double y = odom.pose.pose.position.y;
+	    double z = odom.pose.pose.position.z; 
+	    
+	    double pos[3] = {x,y,z}; 
+	    //put pose into pose matrix
+	    //cout << "Got Current Odometry:" << x << "," << y << "," << z << endl; 
+	    cv::Mat initPose = cv::Mat::eye(4,4,CV_32F); 
+	    cv::Mat initPos = cv::Mat(3,1,CV_32F,pos); 
+	    initPos.copyTo(initPose.rowRange(0,3).col(3)); 
+	    cout << initPose << endl; 
+            // Set Initial Frame Poses
+            //mInitialFrame.SetPose(cv::Mat::eye(4,4,CV_32F));
+            mInitialFrame.SetPose(initPose);
+	    // ***End my addition***
             cv::Mat Tcw = cv::Mat::eye(4,4,CV_32F);
             Rcw.copyTo(Tcw.rowRange(0,3).colRange(0,3));
             tcw.copyTo(Tcw.rowRange(0,3).col(3));
             mCurrentFrame.SetPose(Tcw);
-
+	    cout << Tcw << endl; 
             CreateInitialMapMonocular();
         }
     }
@@ -663,7 +692,7 @@ void Tracking::CreateInitialMapMonocular()
 
     // Bundle Adjustment
     cout << "New Map created with " << mpMap->MapPointsInMap() << " points" << endl;
-
+    
     Optimizer::GlobalBundleAdjustemnt(mpMap,20);
 
     // Set median depth to 1
