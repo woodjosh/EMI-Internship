@@ -42,7 +42,7 @@ To run this project install Ubuntu 18.04 in a virtual machine or dual boot, inst
     ```
 1. Build catkin workspace 
     ```
-    $ cd ~/catkin_ws/`
+    $ cd ~/catkin_ws/
     $ catkin_make
     ```
 If build is complete, you are ready to go 
