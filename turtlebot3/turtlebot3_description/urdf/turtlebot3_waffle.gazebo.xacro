@@ -91,7 +91,7 @@
       <rpyOffsets>0 0 0</rpyOffsets>
     </plugin>
   </gazebo>
-  
+
   <gazebo>
     <plugin name="imu_plugin" filename="libhector_gazebo_ros_imu.so">
       <alwaysOn>true</alwaysOn>
@@ -99,20 +99,19 @@
       <bodyName>imu_link</bodyName>	
       <topicName>imu</topicName>
 
-      <accelOffset>0 0 0</accelOffset>
       <accelDrift>0 0 0</accelDrift>
-      <accelDriftFrequency>0 0 0</accelDriftFrequency>
-      <accelGaussianNoise>1e-4 1e-4 1e-4</accelGaussianNoise>     
+      <accelGaussianNoise>0 0 0</accelGaussianNoise>     
 
-      <rateOffset>0 0 0</rateOffset>
-      <rateDrift>0 0 0</rateDrift>
-      <rateDriftFrequency>0 0 0</rateDriftFrequency>
-      <rateGaussianNoise>1e-4 1e-4 1e-4</rateGaussianNoise>   
+      <!-- Change these -->
+      <rateDrift>21.6 21.6 21.6</rateDrift> 
+      <rateGaussianNoise>2.6 2.6 2.6</rateGaussianNoise>   
 
-      <yawOffset>0 0 0</yawOffset>
-      <yawDrift>0 0 0</yawDrift>
-      <yawDriftFrequency>0 0 0</yawDriftFrequency>
-      <yawGaussianNoise>1e-4 1e-4 1e-4</yawGaussianNoise>   
+      <yawDrift>21.6</yawDrift>
+      <yawGaussianNoise>2.6</yawGaussianNoise>  
+      <!-- END changes -->
+
+      <rpyOffsets>0 0 0</rpyOffsets> 
+      <gaussianNoise>0.0</gaussianNoise>  
     </plugin>    
   </gazebo>
 

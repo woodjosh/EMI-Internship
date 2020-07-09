@@ -1,0 +1,7 @@
+<launch>
+  <!-- FOR RECORDING A TELEOP SESSION -->  
+  <!-- launch turtlebot teleop --> 
+  <include file="$(find turtlebot3_teleop)/launch/turtlebot3_teleop_key.launch"/>
+  <!-- record velocity commands from teleop --> 
+  <node pkg="rosbag" type="record" name="rosrecord" args="-O $(find my_pkgs)/velocity_commands/house_explore.bag /cmd_vel"/>
+</launch>

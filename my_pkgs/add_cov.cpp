@@ -20,12 +20,12 @@ public:
     geometry_msgs::PoseWithCovarianceStamped output;
     output.header = input.header;
     output.pose.pose = input.pose;
-    output.pose.covariance[0] = 0.1; //x  
-    output.pose.covariance[7] = 0.1; //y
-    output.pose.covariance[14] = 0.1; //z
-    output.pose.covariance[21] = 1e-8; //rot x
-    output.pose.covariance[28] = 1e-8; //rot y
-    output.pose.covariance[35] = 1e-8; //rot z
+    output.pose.covariance[0] = 0; //x  
+    output.pose.covariance[7] = 0; //y
+    output.pose.covariance[14] = 0; //z
+    output.pose.covariance[21] = 0; //rot x
+    output.pose.covariance[28] = 0; //rot y
+    output.pose.covariance[35] = 0; //rot z
     pub_.publish(output);
   }
 

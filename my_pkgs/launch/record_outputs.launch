@@ -1,5 +1,6 @@
 <launch>
-  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle, waffle_pi]"/>  
+  <arg name="model"/>  
+  <arg name="location"/> 
 
   <!-- turtlebot bringup -->
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
@@ -20,7 +21,7 @@
     <remap from="/odometry/filtered" to="/localization/gnd_truth"/>
     <rosparam command="load" file="$(find robot_localization)/params/gndtruth.yaml" />
   </node>
-<?ignore
+
   <!-- imu estimate of the position -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_imu" clear_params="true">
     <remap from="/odometry/filtered" to="/localization/imu"/>
@@ -32,13 +33,19 @@
     <remap from="/odometry/filtered" to="/localization/orbslam"/>
     <rosparam command="load" file="$(find robot_localization)/params/orbslam.yaml" />
   </node>
-?>
+
   <!-- imu+camera estimate of the position -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_vio" clear_params="true">
     <remap from="/odometry/filtered" to="/localization/vio"/>
     <rosparam command="load" file="$(find robot_localization)/params/vio.yaml" />
   </node> 
-  
+<?ignore
+?>  
   <!-- visualize results --> 
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_localization)/rviz/turtlebot_robot_localization.rviz"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_localization)/rviz/turtlebot_robot_localization.rviz"/> 
+
+  <!-- play rosbag --> 
+  <node pkg="rosbag" type="play" name="rosplay" args="$(find my_pkgs)/datasets/$(arg location)_$(arg model).bag" required = "true"/>
+  <!-- record outputs --> 
+  <node pkg="rosbag" type="record" name="rosrecord" args="-O $(find my_pkgs)/outputs/$(arg location)_$(arg model)_out.bag /localization/imu /localization/vio /localization/orbslam /localization/gnd_truth"/> 
 </launch>

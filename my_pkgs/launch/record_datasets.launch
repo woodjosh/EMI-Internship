@@ -1,0 +1,9 @@
+<launch>
+  <arg name="model"/>
+  <arg name="location"/> 
+  <!-- FOR RECORDING SENSOR OUTPUTS WITH A PRERECORDED TELEOP SESSION --> 
+  <!-- Run recorded teleop velocity commands --> 
+  <node pkg="rosbag" type="play" name="rosplay" args="$(find my_pkgs)/velocity_commands/house_explore_vel.bag" required="true"/>
+  <!-- record outputs --> 
+  <node pkg="rosbag" type="record" name="rosrecord" args="-O $(find my_pkgs)/datasets/$(arg location)_$(arg model).bag /gnd_truth /imu /camera/rgb/image_raw /tf"/>
+</launch>

@@ -36,6 +36,12 @@
 #include<iostream>
 
 #include<mutex>
+//***my includes***
+#include "nav_msgs/Odometry.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
+//***end my includes***
 
 using namespace std;
 
@@ -601,11 +607,62 @@ void Tracking::MonocularInitialization()
                     nmatches--;
                 }
             }
-            
-            mInitialFrame.SetPose(cv::Mat::eye(4,4,CV_32F));
+            // ***My addition***
+		    // Get current odom msg from robot_localization node   
+		    cout << "Getting Current Odometry"<< endl; 
+		    int argc; 
+		    char **argv; 
+		    ros::init(argc,argv,"odom_listener");
+		    ros::NodeHandle n;
+
+	 	    boost::shared_ptr<nav_msgs::Odometry const> sharedOdom;
+	  	    nav_msgs::Odometry odom;
+	 	    sharedOdom = ros::topic::waitForMessage<nav_msgs::Odometry>("/localization/gnd_truth",n);
+		    ros::Rate loop_rate(10); 
+	  	    if(sharedOdom != NULL){
+	  	      odom = *sharedOdom;
+	 	     }
+
+		    // Get position, convert to coordinate frame 
+		    float north = odom.pose.pose.position.x; 
+		    float east = odom.pose.pose.position.y;
+		    float up = odom.pose.pose.position.z; 
+		    // here: x is east, y is down, z is north 
+		    float pos[3] = {east,-up,-north}; 
+
+		    // Get orientation, convert to rot matrix and correct coord frame 
+		    float qx = odom.pose.pose.orientation.x;
+		    float qy = odom.pose.pose.orientation.y;
+		    float qz = odom.pose.pose.orientation.z;
+		    float qw = odom.pose.pose.orientation.w;
+		    cout << "Got Current Quat:" << qx << " " << qy  << " " << qz << " " << qw << endl; 
+		    cv::Mat initRot(3,3,CV_32F);
+		    glm::mat4 rotMat = glm::mat4_cast(glm::quat(qw,qx,qy,qz)); 
+		    for(int i=0;i<3;++i)
+		    {
+			for(int j=0;j<3;++j)
+			{
+			    initRot.at<float>(i,j) = rotMat[i][j]; 
+			    cout<<rotMat[i][j]<<" ";
+			}
+			cout<<"\n";
+		    }
+		    
+	            //put position into pose matrix
+		    cv::Mat initPose = cv::Mat::eye(4,4,CV_32F); 
+		    cv::Mat initPos(3,1,CV_32F); 
+		    std::memcpy(initPos.data,pos,3*1*sizeof(double)); 
+		    initPos.copyTo(initPose.rowRange(0,3).col(3)); 
+		    // Set Initial Frame Poses
+		    mInitialFrame.SetPose(initPose);
+	    // ***End my addition***
+            //mInitialFrame.SetPose(cv::Mat::eye(4,4,CV_32F));
             cv::Mat Tcw = cv::Mat::eye(4,4,CV_32F);
             Rcw.copyTo(Tcw.rowRange(0,3).colRange(0,3));
-	    tcw.copyTo(Tcw.rowRange(0,3).col(3));
+	    // ***also changed this***
+	    //tcw.copyTo(Tcw.rowRange(0,3).col(3));
+            initPos.copyTo(Tcw.rowRange(0,3).col(3));
+	    // ***end change***
             mCurrentFrame.SetPose(Tcw);
             CreateInitialMapMonocular();
         }
@@ -660,7 +717,7 @@ void Tracking::CreateInitialMapMonocular()
 
     // Bundle Adjustment
     cout << "New Map created with " << mpMap->MapPointsInMap() << " points" << endl;
-
+    
     Optimizer::GlobalBundleAdjustemnt(mpMap,20);
 
     // Set median depth to 1
