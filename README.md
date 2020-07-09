@@ -3,7 +3,9 @@ A ROS framework for comparison of visual-inertial navigation with varying qualit
 
 ## Table of Contents
 [Introduction](#Introduction)
+
 [Setup](#Setup)
+
 [Use](#Use)
 
 ## Introduction 
