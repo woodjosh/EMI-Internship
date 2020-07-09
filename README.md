@@ -2,6 +2,9 @@
 A ROS framework for comparison of visual-inertial navigation with varying quality gyroscopes in simulated and real turtlebots. 
 
 ## Table of Contents
+[Introduction](#Introduction)
+[Setup](#Setup)
+[Use](#Use)
 
 ## Introduction 
 The purpose of this project is to develop a demonstration system to showcase the effectiveness of [Enertia Microsystems Inc.'s](https://enertia-micro.com) novel birdbath resonator gyroscope (BRG) for visual-inertial navigation applications. The BRG is a low-cost, ultra-high precision Micro Electromechanical Systems (MEMS) inertial sensors for future mobility applications (autonomous vehicles).
@@ -33,9 +36,74 @@ To run this project install Ubuntu 18.04 in a virtual machine or dual boot, inst
     $ git clone https://github.com/woodjosh/EMI-Internship/ .
     $ cd ~/catkin_ws && catkin_make
     add: source ~/catkin_ws/devel/setup.bash to the last line of the .bashrc file with nano or text editor
-    $ nano ~/.bashrc 
+    $ nano ~/.bashrc OR gedit ~/.bashrc
     ```
-    
-
+1. Build catkin workspace 
+    ```
+    $ cd ~/catkin_ws/`
+    $ catkin_make
+    ```
+If build is complete, you are ready to go 
 
 ## Use 
+Running tests in simulation has 5 steps: 
+2. Drive robot through environment with keyboard control and record velocity commands 
+2. Create robot model with desired IMU settings 
+2. Drive robot through environment using recorded velocity commands and record images, imu data, and ground truth data 
+2. Run robot_localization package on dataset to visualize and record path estimation results
+2. Visualize and analyze data in MATLAB 
+
+### Drive robot through environment with keyboard control
+Launch gazebo in desired environment with the default turtlebot model (no imu noise). You should see the environment come up with a robot. This may take a while the first time you load a new environment.   
+
+    ```
+    $ roslaunch turtlebot3_gazebo turtlebot3_house.launch model:=waffle
+    ```
+    
+In another terminal run the launch file to enable keyboard control and record velocity commands. The data is stored in a bag file in the [/my_pkgs/velocity_commands directory](/my_pkgs/velocity_commands).  
+
+    ```
+    $ roslaunch my_pkgs record_velcmd.launch location:=house
+    ```
+
+Press CTRL-C twice in the second terminal to end the keyboard control and recording. 
+
+Press CTRL-C in the first terminal to end the gazebo session (this usually takes a while). 
+
+### Create robot model with desired IMU settings 
+*Models already exist for 4 different IMUs: [ADXRS652](https://www.analog.com/en/parametricsearch/11176#/sort=s3,desc&p5100=0.17|10.7&p5177=0.01|0.5&p5173=0|0.25), [3DM-GX5-15](https://www.microstrain.com/content/3dm-gx5-15-vru), [EG-120, and EG-1300](https://emcore.com/product-category/fiber-optic-gyro-fog-sensors-navigation-systems/fiber-optic-gyroscopes-fog-components/#products_main_ct)* 
+
+Copy the urdf description files [turtlebot3_waffle.gazebo.xacro](/turtlebot3/turtlebot3_description/urdf/turtlebot3_waffle.gazebo.xacro) and [turtlebot3_waffle.urdf.xacro](/turtlebot3/turtlebot3_description/urdf/turtlebot3_waffle.urdf.xacro) to new files in the same directory with a descriptive key following 'waffle' like: [turtlebot3_waffleADX.urdf.xacro](/turtlebot3/turtlebot3_description/urdf/turtlebot3_waffleADX.urdf.xacro).
+
+Change the [name of the gazebo file in the urdf file](/turtlebot3/turtlebot3_description/urdf/turtlebot3_waffleADX.urdf.xacro#L4) to match the file you just created.
+
+Change the [imu plugin parameters in the gazebo file](/turtlebot3/turtlebot3_description/urdf/turtlebot3_waffle.gazebo.xacro#L105) to desired values. 
+
+*(optional)* For visualization (to make sure I was running experiments with correct parameters) I also changed the [main color of the robot](/turtlebot3/turtlebot3_description/urdf/turtlebot3_waffleADX.gazebo.xacro#L8) for each model I created. 
+
+### Drive robot through environment and record data 
+Launch gazebo in desired environment with the desired turtlebot model (model arg matches the end of your `.xacro` file names). 
+
+    ```
+    $ roslaunch turtlebot3_gazebo turtlebot3_house.launch model:=waffleADX 
+    ```
+    
+In another terminal run the launch file to record the data (make sure you update model and location). The data is stored in a bag file in the [/my_pkgs/datasets directory](/my_pkgs/datasets).  
+
+    ```
+    $ roslaunch  my_pkgs record_datasets.launch model:=waffleADX location:=house
+    ```
+ 
+The robot should drive through the environment on a path similar to that you recorded. The recording will end when the velocity commands end.
+
+### Run robot_localization package on dataset
+Run robot_localization to display and record the ground truth path and estimated paths based on imu data, visual data, and imu+visual data. The data is stored in a bag file in the [/my_pkgs/outputs directory](/my_pkgs/outputs). Make sure the model and location match those used when recording the dataset.  
+
+    ```
+    $ roslaunch  my_pkgs record_outputs.launch model:=waffleADX location:=house
+    ```
+  
+Generally, the fused data should follow the ground truth most closely, the imu data should display drift, and the visual odometry should be relatively accurate but on the wrong scale. If there are not enough visual features the visual odometry will not initialize, and the terminal will display `Map point vector is empty!` repeatedly. 
+
+### Visualize and analyze data in MATLAB 
+The scripts for data analysis in MATLAB are here. They load data from bag files, display the paths, and calculate RMSE. They are currently very raw and not well written but they do the trick and could be much better with a bit of effort. 
