@@ -103,11 +103,11 @@
       <accelGaussianNoise>0 0 0</accelGaussianNoise>     
 
       <!-- Change these -->
-      <rateDrift>21.6 21.6 21.6</rateDrift> 
-      <rateGaussianNoise>2.6 2.6 2.6</rateGaussianNoise>   
+      <rateDrift>0 0 0</rateDrift> 
+      <rateGaussianNoise>0 0 0</rateGaussianNoise>   
 
-      <yawDrift>21.6</yawDrift>
-      <yawGaussianNoise>2.6</yawGaussianNoise>  
+      <yawDrift>0</yawDrift>
+      <yawGaussianNoise>0</yawGaussianNoise>  
       <!-- END changes -->
 
       <rpyOffsets>0 0 0</rpyOffsets> 
