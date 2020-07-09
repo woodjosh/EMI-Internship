@@ -98,4 +98,4 @@ Run robot_localization to display and record the ground truth path and estimated
 Generally, the fused data should follow the ground truth most closely, the imu data should display drift, and the visual odometry should be relatively accurate but on the wrong scale. If there are not enough visual features the visual odometry will not initialize, and the terminal will display `Map point vector is empty!` repeatedly. 
 
 ### Visualize and analyze data in MATLAB 
-The scripts for data analysis in MATLAB are here. They load data from bag files, display the paths, and calculate RMSE. They are currently very raw and not well written but they do the trick and could be much better with a bit of effort. 
+The scripts for data analysis in MATLAB are [here](https://github.com/woodjosh/EMI-Internship-MATLAB). They load data from bag files, display the paths, and calculate RMSE. They are currently very raw and not well written but they do the trick and could be much better with a bit of effort. 
