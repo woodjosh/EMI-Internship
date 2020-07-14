@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# get command line options
+while getopts l:m:n: option
+do
+case "${option}"
+in
+l) LOC=${OPTARG};;
+m) MOD=${OPTARG};;
+n) N=${OPTARG};;
+esac
+done
+
+# launch the world 
+roslaunch turtlebot3_gazebo turtlebot3_world.launch model:="$MOD"
+# wait to allow the world to come up 
+sleep 5
+
+# record robot data n times 
+for (( trial=1; trial<=$N; trial++ ))
+do  
+   rosservice call /gazebo/reset_simulation "{}"
+   roslaunch my_pkgs record_datasets.launch model:="$MOD" location:="$LOC" trial:="$trial"
+done
+
+
+for (( trial=1; trial<=$N; trial++ ))
+do  
+   roslaunch my_pkgs record_outputs.launch model:="$MOD" location:="$LOC" trial:="$trial"
+done
+

@@ -1,6 +1,7 @@
 <launch>
   <arg name="model"/>  
   <arg name="location"/> 
+  <arg name="trial"/>
 
   <!-- turtlebot bringup -->
   <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
@@ -45,7 +46,7 @@
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_localization)/rviz/turtlebot_robot_localization.rviz"/> 
 
   <!-- play rosbag --> 
-  <node pkg="rosbag" type="play" name="rosplay" args="$(find my_pkgs)/datasets/$(arg location)_$(arg model).bag" required = "true"/>
+  <node pkg="rosbag" type="play" name="rosplay" args="$(find my_pkgs)/datasets/$(arg location)_$(arg model)_$(arg trial).bag" required = "true"/>
   <!-- record outputs --> 
-  <node pkg="rosbag" type="record" name="rosrecord" args="-O $(find my_pkgs)/outputs/$(arg location)_$(arg model)_out.bag /localization/imu /localization/vio /localization/orbslam /localization/gnd_truth"/> 
+  <node pkg="rosbag" type="record" name="rosrecord" args="-O $(find my_pkgs)/outputs/$(arg location)_$(arg model)_$(arg trial)_out.bag /localization/imu /localization/vio /localization/orbslam /localization/gnd_truth"/> 
 </launch>
