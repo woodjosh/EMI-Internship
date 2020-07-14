@@ -41,10 +41,10 @@
     <rosparam command="load" file="$(find robot_localization)/params/vio.yaml" />
   </node> 
 <?ignore
-?>  
+ 
   <!-- visualize results --> 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_localization)/rviz/turtlebot_robot_localization.rviz"/> 
-
+?>
   <!-- play rosbag --> 
   <node pkg="rosbag" type="play" name="rosplay" args="$(find my_pkgs)/datasets/$(arg location)_$(arg model)_$(arg trial).bag" required = "true"/>
   <!-- record outputs --> 

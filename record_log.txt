@@ -1,0 +1,61 @@
+[0m[ INFO] [1594742559.779627703]: Finished loading Gazebo ROS API Plugin.[0m
+[0m[ INFO] [1594742559.782302784]: waitForService: Service [/gazebo/set_physics_properties] has not been advertised, waiting...[0m
+[0m[ INFO] [1594742560.943781130]: waitForService: Service [/gazebo/set_physics_properties] is now available.[0m
+[0m[ INFO] [1594742560.964796764]: Physics dynamic reconfigure ready.[0m
+[0m[ INFO] [1594742561.575883914, 0.182000000]: Camera Plugin: Using the 'robotNamespace' param: '/'[0m
+[0m[ INFO] [1594742561.580748830, 0.182000000]: Camera Plugin (ns = /)  <tf_prefix_>, set to ""[0m
+[0m[ INFO] [1594742561.732204557, 0.182000000]: Laser Plugin: Using the 'robotNamespace' param: '/'[0m
+[0m[ INFO] [1594742561.732289207, 0.182000000]: Starting Laser Plugin (ns = /)[0m
+[0m[ INFO] [1594742561.733524600, 0.182000000]: Laser Plugin (ns = /)  <tf_prefix_>, set to ""[0m
+[0m[ INFO] [1594742561.841503459, 0.182000000]: Starting plugin DiffDrive(ns = //)[0m
+[0m[ INFO] [1594742561.841644856, 0.182000000]: DiffDrive(ns = //): <rosDebugLevel> = na[0m
+[0m[ INFO] [1594742561.842611641, 0.182000000]: DiffDrive(ns = //): <tf_prefix> = [0m
+[0m[ INFO] [1594742561.843898461, 0.182000000]: DiffDrive(ns = //): Advertise joint_states[0m
+[0m[ INFO] [1594742561.844637827, 0.182000000]: DiffDrive(ns = //): Try to subscribe to cmd_vel[0m
+[0m[ INFO] [1594742561.846810390, 0.182000000]: DiffDrive(ns = //): Subscribe to cmd_vel[0m
+[0m[ INFO] [1594742561.848407356, 0.182000000]: DiffDrive(ns = //): Advertise odom on odom [0m
+... logging to /home/josh/.ros/log/703c4872-c5eb-11ea-9769-1063c89236d3/roslaunch-josh-Aspire-5385.log
+Checking log directory for disk usage. This may take a while.
+Press Ctrl-C to interrupt
+Done checking log file disk usage. Usage is <1GB.
+]2;/home/josh/catkin_ws/src/my_pkgs/launch/record_datasets.launch
+[1mstarted roslaunch server http://josh-Aspire:35195/[0m
+
+SUMMARY
+========
+
+PARAMETERS
+ * /gazebo/enable_ros_network: True
+ * /robot_description: <?xml version="1....
+ * /rosdistro: melodic
+ * /rosversion: 1.14.6
+ * /use_sim_time: True
+
+NODES
+  /
+    gazebo (gazebo_ros/gzserver)
+    rosplay (rosbag/play)
+    rosrecord (rosbag/record)
+    spawn_urdf (gazebo_ros/spawn_model)
+
+auto-starting new master
+[1mprocess[master]: started with pid [5398][0m
+[1mROS_MASTER_URI=http://localhost:11311[0m
+]2;/home/josh/catkin_ws/src/my_pkgs/launch/record_datasets.launch http://localhost:11311
+[1msetting /run_id to 703c4872-c5eb-11ea-9769-1063c89236d3[0m
+[1mprocess[rosout-1]: started with pid [5409][0m
+started core service [/rosout]
+[1mprocess[gazebo-2]: started with pid [5412][0m
+[1mprocess[spawn_urdf-3]: started with pid [5420][0m
+[1mprocess[rosplay-4]: started with pid [5422][0m
+[1mprocess[rosrecord-5]: started with pid [5423][0m
+[1m[spawn_urdf-3] process has finished cleanly
+log file: /home/josh/.ros/log/703c4872-c5eb-11ea-9769-1063c89236d3/spawn_urdf-3*.log[0m
+[rosrecord-5] killing on exit
+[gazebo-2] killing on exit
+[rosplay-4] killing on exit
+[rosout-1] killing on exit
+[master] killing on exit
+shutting down processing monitor...
+... shutting down processing monitor complete
+[1mdone[0m

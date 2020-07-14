@@ -1,31 +1,32 @@
 #!/bin/bash
 
 # get command line options
-while getopts l:m:n: option
+while getopts l:n: option
 do
 case "${option}"
 in
 l) LOC=${OPTARG};;
-m) MOD=${OPTARG};;
 n) N=${OPTARG};;
 esac
 done
 
-# launch the world 
-roslaunch turtlebot3_gazebo turtlebot3_world.launch model:="$MOD"
-# wait to allow the world to come up 
-sleep 5
+models=(waffleADX waffle3DM waffleEG120 waffleEG1300)
 
-# record robot data n times 
-for (( trial=1; trial<=$N; trial++ ))
-do  
-   rosservice call /gazebo/reset_simulation "{}"
-   roslaunch my_pkgs record_datasets.launch model:="$MOD" location:="$LOC" trial:="$trial"
-done
+rm ./record_log.txt
+rm ./output_log.txt
 
-
-for (( trial=1; trial<=$N; trial++ ))
-do  
-   roslaunch my_pkgs record_outputs.launch model:="$MOD" location:="$LOC" trial:="$trial"
-done
-
+for MOD in "${models[@]}"
+do
+   # record robot data for n trials  
+   for (( trial=1; trial<=$N; trial++ ))
+   do  
+      printf "recording %s trial %s data...\n" "${MOD}" "${trial}"
+      #record data 
+      roslaunch my_pkgs record_datasets.launch model:="$MOD" location:="$LOC" trial:="$trial" > ./record_log.txt
+      #record outputs
+      printf "recording %s trial %s outputs...\n" "${MOD}" "${trial}"
+      roslaunch my_pkgs record_outputs.launch model:="$MOD" location:="$LOC" trial:="$trial" > ./output_log.txt
+      #delete associated data file to save space 
+      rm ./my_pkgs/datasets/${LOC}_${MOD}_${trial}.bag
+   done
+done 

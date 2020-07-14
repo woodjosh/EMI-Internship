@@ -3,6 +3,11 @@
   <arg name="location"/> 
   <arg name="trial"/>
 
+  <!-- world bringup -->
+  <include file="$(find turtlebot3_gazebo)/launch/turtlebot3_$(arg location).launch">
+    <arg name="model" value="$(arg model)"/>
+  </include>
+
   <!-- FOR RECORDING SENSOR OUTPUTS WITH A PRERECORDED TELEOP SESSION --> 
   <!-- Run recorded teleop velocity commands --> 
   <node pkg="rosbag" type="play" name="rosplay" args="$(find my_pkgs)/velocity_commands/house_explore_vel.bag" required="true"/>
