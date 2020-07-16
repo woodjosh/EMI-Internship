@@ -61,9 +61,11 @@ Running tests in simulation has 5 steps:
 2. Visualize and analyze data in MATLAB 
 
 These steps can be run automatically for a desired number of trials using the [get_data.sh](/my_pkgs/get_data.sh) script. To run this script, run: 
+
     ```
     $ rosrun my_pkgs get_data.sh -l house -s 1 -f 5 
     ```
+    
 Where -l is the location label, -s is the starting trial label, and -f is the end trial label. For example, the above command would run 5 trials for each model in the [get_data.sh file](/my_pkgs/get_data.sh#L26) and automatically record the outputs of the kalman filter to bag files in the [/my_pkgs/outputs directory](/my_pkgs/outputs). The script automatically deletes bag files of the actual camera and imu data because of their large size. The results can be processed using the matlab script [here](https://github.com/woodjosh/EMI-Internship-MATLAB). For a better understanding of this custom script, try following through each step below and finding the associated commands in the script.  
 
 ### Drive robot through environment with keyboard control
