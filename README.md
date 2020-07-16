@@ -54,11 +54,11 @@ If build is complete, you are ready to go
 
 ## Use 
 Running tests in simulation has 5 steps: 
-2. Drive robot through environment with keyboard control and record velocity commands 
-2. Create robot model with desired IMU settings 
-2. Drive robot through environment using recorded velocity commands and record images, imu data, and ground truth data 
-2. Run robot_localization package on dataset to visualize and record path estimation results
-2. Visualize and analyze data in MATLAB 
+1. Drive robot through environment with keyboard control and record velocity commands 
+1. Create robot model with desired IMU settings 
+1. Drive robot through environment using recorded velocity commands and record images, imu data, and ground truth data 
+1. Run robot_localization package on dataset to visualize and record path estimation results
+1. Visualize and analyze data in MATLAB 
 
 These steps can be run automatically for a desired number of trials using the [get_data.sh](/my_pkgs/get_data.sh) script. To run this script, run: 
 
