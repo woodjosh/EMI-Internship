@@ -13,7 +13,7 @@ function showHelp(){
 }
 
 # get command line options
-while getopts l:n: option
+while getopts l:s:f: option
 do
 case "${option}"
 in
@@ -28,7 +28,7 @@ models=(waffleADX waffle3DM waffleEG120 waffleEG1300)
 for MOD in "${models[@]}"
 do
    # record robot data for n trials  
-   for (( trial=${BEG}; trial<=${END}; trial++ ))
+   for ((trial=${BEG}; trial<=${END}; trial++))
    do  
       printf "recording %s trial %s data...\n" "${MOD}" "${trial}"
       #bring up world 
@@ -50,4 +50,3 @@ do
 done 
 #play sound 
 paplay /usr/share/sounds/freedesktop/stereo/complete.oga
-

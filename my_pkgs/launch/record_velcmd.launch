@@ -4,5 +4,5 @@
   <!-- launch turtlebot teleop --> 
   <include file="$(find turtlebot3_teleop)/launch/turtlebot3_teleop_key.launch"/>
   <!-- record velocity commands from teleop --> 
-  <node pkg="rosbag" type="record" name="rosrecord" args="-O $(find my_pkgs)/velocity_commands/$(arg location)_vel_cmd.bag /cmd_vel"/>
+  <node pkg="rosbag" type="record" name="rosrecord" args="-O $(find my_pkgs)/velocity_commands/$(arg location)_vel_cmd2.bag /cmd_vel"/>
 </launch>
