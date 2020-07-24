@@ -7,7 +7,7 @@
   <!-- decompress images from the turtlebot --> 
   <node pkg="image_transport" type="republish" name="compressed_to_raw"
     args="compressed in:=/raspicam_node/image/ raw out:=/camera/image_raw" />
-<?ignore
+
   <!-- launch orb_slam2 -->
   <include file="$(find orb_slam2_ros)/ros/launch/orb_slam2_raspi_mono.launch"/>
 
@@ -16,31 +16,25 @@
   
   <!-- publish transform between map and odom -->
   <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0 1.0 map odom 100" />
-?>
-  <!-- odometry position -->	
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_odom" clear_params="true">
-    <remap from="/odometry/filtered" to="/localization/odom"/>
-    <rosparam command="load" file="$(find robot_localization)/params/odom.yaml" />
-  </node>
 
-  <!-- imu estimate of the position -->
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_imu" clear_params="true">
-    <remap from="/odometry/filtered" to="/localization/imu"/>
-    <rosparam command="load" file="$(find robot_localization)/params/imu.yaml" />
+  <!-- imu + encoder estimate of the position -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_imu_enc" clear_params="true">
+    <remap from="/odometry/filtered" to="/localization/imu_enc"/>
+    <rosparam command="load" file="$(find robot_localization)/params/imu_enc.yaml" />
   </node> 
-<?ignore    
+
   <!-- camera estimate of the position -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_orbslam" clear_params="true">
     <remap from="/odometry/filtered" to="/localization/orbslam"/>
     <rosparam command="load" file="$(find robot_localization)/params/orbslam.yaml" />
   </node>
 
-  <!-- imu+camera estimate of the position -->
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_vio" clear_params="true">
+  <!-- camera+imu+encoder estimate of the position -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_vis_imu_enc" clear_params="true">
     <remap from="/odometry/filtered" to="/localization/vio"/>
-    <rosparam command="load" file="$(find robot_localization)/params/vio.yaml" />
+    <rosparam command="load" file="$(find robot_localization)/params/vis_imu_enc.yaml" />
   </node> 
-?>
+
   <!-- visualize results --> 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_localization)/rviz/turtlebot_real_localization.rviz"/> 
 </launch>

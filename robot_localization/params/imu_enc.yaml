@@ -66,12 +66,31 @@ odom_frame: odom            # Defaults to "odom" if unspecified
 base_link_frame: base_footprint # Defaults to "base_link" if unspecified
 world_frame: odom           # Defaults to the value of odom_frame if unspecified
 
+# Add odometry input (only for forward acceleration)
+odom0: /odom
+
+# x, y, z
+# roll, pitch, yaw, 
+# vx, vy, vz, 
+# vroll, vpitch, vyaw, 
+# ax, ay, az. 
+odom0_config: [true,  false,  false,
+               false, false, false,
+               true,  false, false,
+               false, false, false,
+               true,  false, false]
+odom0_queue_size: 50
+odom0_nodelay: true
+odom0_relative: true
+odom0_differential: false
+
+# Add imu input
 imu0: /imu
 imu0_config: [false, false, false,
               false, false, true,
               false, false, false,
               false, false, true,
-              true, false, false]
+              false, false, false]
 imu0_queue_size: 50
 imu0_nodelay: true
 imu0_relative: false

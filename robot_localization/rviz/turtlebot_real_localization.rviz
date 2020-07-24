@@ -6,7 +6,6 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /GND_Odom1/Shape1
         - /IMU_Odom1/Shape1
         - /VIS_Odom1/Shape1
         - /VIO_Odom1/Shape1
@@ -75,40 +74,6 @@ Visualization Manager:
         Value: false
       Enabled: true
       Keep: 500
-      Name: GND_Odom
-      Position Tolerance: 0.10000000149011612
-      Shape:
-        Alpha: 1
-        Axes Length: 1
-        Axes Radius: 0.10000000149011612
-        Color: 78; 154; 6
-        Head Length: 0.10000000149011612
-        Head Radius: 0.10000000149011612
-        Shaft Length: 0.20000000298023224
-        Shaft Radius: 0.05000000074505806
-        Value: Arrow
-      Topic: /localization/odom
-      Unreliable: false
-      Value: true
-    - Angle Tolerance: 0.10000000149011612
-      Class: rviz/Odometry
-      Covariance:
-        Orientation:
-          Alpha: 0.5
-          Color: 255; 255; 127
-          Color Style: Unique
-          Frame: Local
-          Offset: 1
-          Scale: 1
-          Value: true
-        Position:
-          Alpha: 0.30000001192092896
-          Color: 204; 51; 204
-          Scale: 1
-          Value: true
-        Value: false
-      Enabled: true
-      Keep: 500
       Name: IMU_Odom
       Position Tolerance: 0.10000000149011612
       Shape:
@@ -121,7 +86,7 @@ Visualization Manager:
         Shaft Length: 0.20000000298023224
         Shaft Radius: 0.05000000074505806
         Value: Arrow
-      Topic: /localization/imu
+      Topic: /localization/imu_enc
       Unreliable: false
       Value: true
     - Angle Tolerance: 0.10000000149011612
