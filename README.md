@@ -6,7 +6,9 @@ A ROS framework for comparison of visual-inertial navigation with varying qualit
 
 [Setup](#Setup)
 
-[Use](#Use)
+[Performing Simulations](#Performing Simulations)
+
+[Performing Experiments with Real Turtlebot](#Performing Experiments with Real Turtlebot)
 
 ## Introduction 
 The purpose of this project is to develop a demonstration system to showcase the effectiveness of [Enertia Microsystems Inc.'s](https://enertia-micro.com) novel birdbath resonator gyroscope (BRG) for visual-inertial navigation applications. The BRG is a low-cost, ultra-high precision Micro Electromechanical Systems (MEMS) inertial sensors for future mobility applications (autonomous vehicles).
@@ -52,7 +54,7 @@ To run this project install Ubuntu 18.04 in a virtual machine or dual boot, inst
     ```
 If build is complete, you are ready to go 
 
-## Use 
+## Performing Simulations  
 Running tests in simulation has 5 steps: 
 1. Drive robot through environment with keyboard control and record velocity commands 
 1. Create robot model with desired IMU settings 
@@ -110,3 +112,5 @@ Generally, the fused data should follow the ground truth most closely, the imu d
 
 ### Visualize and analyze data in MATLAB 
 The scripts for data analysis in MATLAB are [here](https://github.com/woodjosh/EMI-Internship-MATLAB). They load data from bag files, display the paths, and calculate RMSE. They are currently very raw and not well written but they do the trick and could be much better with a bit of effort. 
+
+## Performing Experiments with Real Turtlebot  
