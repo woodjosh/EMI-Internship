@@ -45,7 +45,7 @@ imu0_remove_gravitational_acceleration: true
 
 
 # Add visual odometry
-pose0: orb_slam2_mono/pose_cov
+pose0: orb_slam2_mono/pose_cov_fusion
 
 pose0_config: [false, false, false,
                false, false, true,
@@ -56,7 +56,7 @@ pose0_config: [false, false, false,
 pose0_queue_size: 50
 pose0_nodelay: false
 pose0_relative: false
-pose0_differential: true
+pose0_differential: false
 
 # [ADVANCED] The process noise covariance matrix can be difficult to tune, and can vary for each application, so it is
 # exposed as a configuration parameter. This matrix represents the noise we add to the total error after each

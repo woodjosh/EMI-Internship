@@ -6,8 +6,11 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /IMU_Odom1
         - /IMU_Odom1/Shape1
+        - /VIS_Odom1
         - /VIS_Odom1/Shape1
+        - /VIO_Odom1
         - /VIO_Odom1/Shape1
       Splitter Ratio: 0.5
     Tree Height: 755
@@ -81,10 +84,10 @@ Visualization Manager:
         Axes Length: 1
         Axes Radius: 0.10000000149011612
         Color: 255; 25; 0
-        Head Length: 0.10000000149011612
-        Head Radius: 0.10000000149011612
-        Shaft Length: 0.20000000298023224
-        Shaft Radius: 0.05000000074505806
+        Head Length: 0.009999999776482582
+        Head Radius: 0.05000000074505806
+        Shaft Length: 0.10000000149011612
+        Shaft Radius: 0.019999999552965164
         Value: Arrow
       Topic: /localization/imu_enc
       Unreliable: false
@@ -115,10 +118,10 @@ Visualization Manager:
         Axes Length: 1
         Axes Radius: 0.10000000149011612
         Color: 52; 101; 164
-        Head Length: 0.10000000149011612
-        Head Radius: 0.10000000149011612
-        Shaft Length: 0.20000000298023224
-        Shaft Radius: 0.05000000074505806
+        Head Length: 0.009999999776482582
+        Head Radius: 0.05000000074505806
+        Shaft Length: 0.10000000149011612
+        Shaft Radius: 0.019999999552965164
         Value: Arrow
       Topic: /localization/orbslam
       Unreliable: false
@@ -149,10 +152,10 @@ Visualization Manager:
         Axes Length: 1
         Axes Radius: 0.10000000149011612
         Color: 92; 53; 102
-        Head Length: 0.10000000149011612
-        Head Radius: 0.10000000149011612
-        Shaft Length: 0.20000000298023224
-        Shaft Radius: 0.05000000074505806
+        Head Length: 0.009999999776482582
+        Head Radius: 0.05000000074505806
+        Shaft Length: 0.10000000149011612
+        Shaft Radius: 0.019999999552965164
         Value: Arrow
       Topic: /localization/vio
       Unreliable: false

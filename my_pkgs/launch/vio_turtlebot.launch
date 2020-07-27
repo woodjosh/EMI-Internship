@@ -12,7 +12,10 @@
   <include file="$(find orb_slam2_ros)/ros/launch/orb_slam2_raspi_mono.launch"/>
 
   <!-- my node to add covariance to orb_slam2 output --> 
-  <node pkg="my_pkgs" type="add_cov" name="orb_cov" clear_params="true"/>
+  <node pkg="my_pkgs" type="add_cov" name="orb_cov" clear_params="true" args="_covariance:=0.0005 _for_fusion:=true"/>
+
+  <!-- my node to add covariance to orb_slam2 output --> 
+  <node pkg="my_pkgs" type="add_cov" name="orb_cov2" clear_params="true" args="_covariance:=0 _for_fusion:=false"/>
   
   <!-- publish transform between map and odom -->
   <node pkg="tf" type="static_transform_publisher" name="odom_to_map" args="0 0 0 0 0 0 1.0 map odom 100" />
