@@ -6,9 +6,9 @@ A ROS framework for comparison of visual-inertial navigation with varying qualit
 
 [Setup](#Setup)
 
-[Performing Simulations](#Performing Simulations)
+[Running Simulations](#Running-Simulations)
 
-[Performing Experiments with Real Turtlebot](#Performing Experiments with Real Turtlebot)
+[Running Experiments with Real Turtlebot](#Running-Experiments-with-Real-Turtlebot)
 
 ## Introduction 
 The purpose of this project is to develop a demonstration system to showcase the effectiveness of [Enertia Microsystems Inc.'s](https://enertia-micro.com) novel birdbath resonator gyroscope (BRG) for visual-inertial navigation applications. The BRG is a low-cost, ultra-high precision Micro Electromechanical Systems (MEMS) inertial sensors for future mobility applications (autonomous vehicles).
@@ -54,7 +54,7 @@ To run this project install Ubuntu 18.04 in a virtual machine or dual boot, inst
     ```
 If build is complete, you are ready to go 
 
-## Performing Simulations  
+## Running Simulations  
 Running tests in simulation has 5 steps: 
 1. Drive robot through environment with keyboard control and record velocity commands 
 1. Create robot model with desired IMU settings 
@@ -113,4 +113,58 @@ Generally, the fused data should follow the ground truth most closely, the imu d
 ### Visualize and analyze data in MATLAB 
 The scripts for data analysis in MATLAB are [here](https://github.com/woodjosh/EMI-Internship-MATLAB). They load data from bag files, display the paths, and calculate RMSE. They are currently very raw and not well written but they do the trick and could be much better with a bit of effort. 
 
-## Performing Experiments with Real Turtlebot  
+## Running Experiments with Real Turtlebot 
+Running experiments with the real turtlebot has 6 steps: 
+1. Configure settings of the path estimation node
+1. Connect to and initialize the turtlebot via ssh 
+1. Record video of robot traveling through environment
+1. Record the output of the path estimation nodes 
+1. Drive robot through environment using teleoperation
+1. Visualize and analyze data in MATLAB 
+
+### Configure settings of the path  estimation node 
+The path estimation node is a kalman filter, so it requires tuning for proper functioning. The documentation of the robot_localization node used for this path estimation can be found [here](http://docs.ros.org/melodic/api/robot_localization/html/index.html). [Parameter files](/robot_localization/params/) are used to control how each individual node functions. These are pointed to in the [launch file](/my_pkgs/launch/vio_turtlebot.launch#L26). 
+
+The [launch file](/my_pkgs/launch/vio_turtlebot.launch) controls the launching of all related nodes needed for this path estimation. The important parameter than can be edited here is the [covariance of the visual odometry node](/my_pkgs/launch/vio_turtlebot.launch#L15). This value controls how the filter fuses the visual odometry with the imu odometry. The covariance of the imu messages is approximately 0.002, so I set the visual odometry covariance to 0.0005 because it does not have drift and is more trustworthy. 
+
+### Connect to and initialize the turtlebot via ssh 
+Power on the turtlebot by flipping the switch on the second layer at the front of the robot. Wait about 30 seconds to allow everything to power up. Open an new terminal and use [ssh](https://www.ssh.com/ssh/) to connect to the raspberry pi on board the turtlebot.
+
+    $ ssh emi@192.168.0.18 
+    
+The password is `turtlebot`. If you have trouble, it is likely a network problem. Some simple google searches will usually resolve the problem. Once connected to the raspberry pi, run the bringup protocol from this same terminal. 
+
+    $ roslaunch turtlebot3_bringup turtlebot3_robot.launch
+    
+If all is well, the robot will display something similar to the code below.
+
+    SUMMARY
+    ========
+
+    PARAMETERS
+     * /rosdistro: melodic
+     * /rosversion: 1.12.13
+     * /turtlebot3_core/baud: 115200
+     * /turtlebot3_core/port: /dev/ttyACM0
+     * /turtlebot3_core/tf_prefix: 
+     * /turtlebot3_lds/frame_id: base_scan
+     * /turtlebot3_lds/port: /dev/ttyUSB0
+
+    NODES
+      /
+        turtlebot3_core (rosserial_python/serial_node.py)
+        turtlebot3_diagnostics (turtlebot3_bringup/turtlebot3_diagnostics)
+        turtlebot3_lds (hls_lfcd_lds_driver/hlds_laser_publisher)
+    ... 
+    
+    ...
+    [INFO] [1531306696.415140]: This core(v1.2.1) is compatible with TB3 Burger
+    [INFO] [1531306696.418398]: --------------------------
+    [INFO] [1531306696.421749]: Start Calibration of Gyro
+    [INFO] [1531306698.953226]: Calibration End
+    
+### Record video of robot traveling through environment 
+This video is used to get a ground truth path for the robot with image processing. It relies on a QR code to track the robot. The video must be stable and unmoving and taken from directly above the driving space of the robot. Any webcam should work to take this video. I took the video with my iphone by using [droidcam](https://www.dev47apps.com), which worked very well for me. Below is an example of an image taken during my experiments. The video should be started **before** the next steps. 
+
+
+
