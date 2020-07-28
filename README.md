@@ -60,7 +60,7 @@ Running tests in simulation has 5 steps:
 1. [Create robot model with desired IMU settings ](#Create-robot-model-with-desired-IMU-settings) 
 1. [Drive robot through environment using recorded velocity commands and record images, imu data, and ground truth data](#Drive-robot-through-environment-and-record-data) 
 1. [Run robot_localization package on dataset to visualize and record path estimation results](#Run-robot_localization-package-on-dataset)
-1. [Visualize and analyze data in MATLAB](#Visualize-and-analyze-data-in-MATLAB) 
+1. [Visualize and analyze data in MATLAB](#Visualize-and-analyze-simulation-data-in-MATLAB) 
 
 These steps can be run automatically for a desired number of trials using the [get_data.sh](/my_pkgs/get_data.sh) script. To run this script, run: 
 
@@ -110,7 +110,7 @@ Run robot_localization to display and record the ground truth path and estimated
     
 Generally, the fused data should follow the ground truth most closely, the imu data should display drift, and the visual odometry should be relatively accurate but on the wrong scale. If there are not enough visual features the visual odometry will not initialize, and the terminal will display `Map point vector is empty!` repeatedly. 
 
-### Visualize and analyze data in MATLAB 
+### Visualize and analyze simulated data in MATLAB 
 The scripts for data analysis in MATLAB are [here](https://github.com/woodjosh/EMI-Internship-MATLAB). They load data from bag files, display the paths, and calculate RMSE. They are currently very raw and not well written but they do the trick and could be much better with a bit of effort. 
 
 ## Running Experiments with Real Turtlebot 
@@ -121,9 +121,9 @@ Running experiments with the real turtlebot has 6 steps:
 1. [Launch and record output of the path estimation nodes](#Launch-and-record-output-of-the-path-estimation-nodes)
 1. [Drive robot through environment using teleoperation](#Drive-robot-through-environment-using-teleoperation)
 1. [Shut everything down](#Shut-everything-down)
-1. [Visualize and analyze data in MATLAB](#Visualize-and-analyze-data-in-MATLAB)
+1. [Visualize and analyze data in MATLAB](#Visualize-and-analyze-real-data-in-MATLAB)
 
-### Configure settings of the path  estimation node 
+### Configure settings of the path estimation node 
 The path estimation node is a kalman filter, so it requires tuning for proper functioning. The documentation of the robot_localization node used for this path estimation can be found [here](http://docs.ros.org/melodic/api/robot_localization/html/index.html). [Parameter files](/robot_localization/params/) are used to control how each individual node functions. These are pointed to in the [launch file](/my_pkgs/launch/vio_turtlebot.launch#L26). 
 
 The [launch file](/my_pkgs/launch/vio_turtlebot.launch) controls the launching of all related nodes needed for this path estimation. The important parameter than can be edited here is the [covariance of the visual odometry node](/my_pkgs/launch/vio_turtlebot.launch#L15). This value controls how the filter fuses the visual odometry with the imu odometry. The covariance of the imu messages is approximately 0.002, so I set the visual odometry covariance to 0.0005 because it does not have drift and is more trustworthy. 
@@ -205,5 +205,5 @@ In order to end the trial, things should be shut down in this order:
 
 At this point, everything is properly shut down and the data can be analyzed. 
 
-### Visualize and analyze data in MATLAB 
+### Visualize and analyze real data in MATLAB 
 The MATLAB scripts for analyzing the data can be found [here](https://github.com/woodjosh/EMI-Internship-MATLAB/Real Experiment Processing). First, run the [process real experiments script](https://github.com/woodjosh/EMI-Internship-MATLAB/Real Experiment Processing/process_real_experiments.m). Make sure to update all filenames at the top of the script so they point to the video file and bag file from the experiment(s) you are looking at and a good destination for the processed data. Once that script has completed, you can run the [plot real results script](https://github.com/woodjosh/EMI-Internship-MATLAB/Real Experiment Processing/plot_real_results.m). Again, make sure the file at the top of the script is the one you exported from the previous script. 
