@@ -118,8 +118,9 @@ Running experiments with the real turtlebot has 6 steps:
 1. Configure settings of the path estimation node
 1. Connect to and initialize the turtlebot via ssh 
 1. Record video of robot traveling through environment
-1. Record the output of the path estimation nodes 
+1. Launch and record output of the path estimation nodes 
 1. Drive robot through environment using teleoperation
+1. Shut everything down 
 1. Visualize and analyze data in MATLAB 
 
 ### Configure settings of the path  estimation node 
@@ -128,11 +129,15 @@ The path estimation node is a kalman filter, so it requires tuning for proper fu
 The [launch file](/my_pkgs/launch/vio_turtlebot.launch) controls the launching of all related nodes needed for this path estimation. The important parameter than can be edited here is the [covariance of the visual odometry node](/my_pkgs/launch/vio_turtlebot.launch#L15). This value controls how the filter fuses the visual odometry with the imu odometry. The covariance of the imu messages is approximately 0.002, so I set the visual odometry covariance to 0.0005 because it does not have drift and is more trustworthy. 
 
 ### Connect to and initialize the turtlebot via ssh 
-Power on the turtlebot by flipping the switch on the second layer at the front of the robot. Wait about 30 seconds to allow everything to power up. Open an new terminal and use [ssh](https://www.ssh.com/ssh/) to connect to the raspberry pi on board the turtlebot.
+Open a new terminal (#1) and start the ros core on your computer
+
+    $ roscore
+
+Power on the turtlebot by flipping the switch on the second layer at the front of the robot. Wait about 30 seconds to allow everything to power up. Open an new terminal (#2) and use [ssh](https://www.ssh.com/ssh/) to connect to the raspberry pi on board the turtlebot.
 
     $ ssh emi@192.168.0.18 
-    
-The password is `turtlebot`. If you have trouble, it is likely a network problem. Some simple google searches will usually resolve the problem. Once connected to the raspberry pi, run the bringup protocol from this same terminal. 
+
+The password is `turtlebot`. If you have trouble, it is likely a network problem. Some simple google searches will usually resolve the problem. Once connected to the raspberry pi, run the bringup protocol from this same terminal (#2). 
 
     $ roslaunch turtlebot3_bringup turtlebot3_robot.launch
     
@@ -164,7 +169,41 @@ If all is well, the robot will display something similar to the code below.
     [INFO] [1531306698.953226]: Calibration End
     
 ### Record video of robot traveling through environment 
-This video is used to get a ground truth path for the robot with image processing. It relies on a QR code to track the robot. The video must be stable and unmoving and taken from directly above the driving space of the robot. Any webcam should work to take this video. I took the video with my iphone by using [droidcam](https://www.dev47apps.com), which worked very well for me. Below is an example of an image taken during my experiments. The video should be started **before** the next steps. 
+This video is used to get a ground truth path for the robot with image processing. It relies on a QR code to track the robot. The video must be stable and unmoving and taken from directly above the driving space of the robot. Any webcam can be used. I took the video with my iphone by using [droidcam](https://www.dev47apps.com), which worked very well for me. Below is an example of an image taken during my experiments. The video should be started **before** the next steps. 
 
 <img src="https://github.com/woodjosh/EMI-Internship/blob/master/turtlebotcam_img.png" width="635" height="477.5">
 
+### Launch and record output of the path estimation nodes 
+Open a new terminal (#3) and launch the path estimation nodes. These will take the sensor messages from the robot, use them to estimate the robot's path and display the estimated path in rviz. 
+    
+    $ roslaunch my_pkgs vio_turtlebot.launch
+    
+Open another terminal (#4) and record the outputs of these nodes to a bag file.
+
+    $ rosbag record /localization/imu_enc /localization/orbslam /localization/vio
+    
+If there are other topics you want to record, just add them to the end of the command. 
+
+### Drive robot through environment using teleoperation 
+Open a final terminal (#5) and start teleoperation. 
+
+    $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch 
+    
+At this point, you should have 5 different terminals open at the same time, and your screen should look like this: 
+<img src="https://github.com/woodjosh/EMI-Internship/blob/master/TerminalsScreenshot.png">
+
+### Shut everything down 
+In order to end the trial, things should be shut down in this order: 
+1. Stop the robot by pressing Ctrl+C in terminal #5 
+1. Stop the rosbag recording by pressing Ctrl-C in terminal #4 
+1. Stop the video recording with whatever you were using to record the video 
+1. Stop the localization nodes by pressing Ctrl-C in terminal #3 
+1. Stop the turtlebot by pressing Ctrl-C in terminal #2 
+1. Shut down the turtlebot raspberry pi in terminal #2: `$ sudo shutdown now` password is still turtlebot 
+1. Turn off the turtlebot by flipping the switch on the front 
+1. End the ros core by pressing Ctrl-C in terminal #1
+
+At this point, everything is properly shut down and the data can be analyzed. 
+
+### Visualize and analyze data in MATLAB 
+The MATLAB scripts for analyzing the data can be found [here](https://github.com/woodjosh/EMI-Internship-MATLAB)
