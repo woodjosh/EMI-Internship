@@ -54,6 +54,8 @@ To run this project install Ubuntu 18.04 in a virtual machine or dual boot, inst
     ```
 If build is complete, you are ready to go 
 
+To edit the source code of the robot, first install the arduino IDE with [this tutorial](https://emanual.robotis.com/docs/en/parts/controller/opencr10/#sensors). 
+
 ## Running Simulations  
 Running tests in simulation has 5 steps: 
 1. [Drive robot through environment with keyboard control and record velocity commands ](#Drive-robot-through-environment-with-keyboard-control)
