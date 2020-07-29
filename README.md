@@ -171,7 +171,7 @@ If all is well, the robot will display something similar to the code below.
 ### Record video of robot traveling through environment 
 This video is used to get a ground truth path for the robot with image processing. It relies on a QR code to track the robot. The video must be stable and unmoving and taken from directly above the driving space of the robot. Any webcam can be used. I took the video with my iphone by using [droidcam](https://www.dev47apps.com), which worked very well for me. Below is an example of an image taken during my experiments. The video should be started **before** the next steps. 
 
-<img src="https://github.com/woodjosh/EMI-Internship/blob/master/turtlebotcam_img.png" width="635" height="477.5">
+<img src="https://github.com/woodjosh/EMI-Internship/blob/master/images/turtlebotcam_img.png" width="635" height="477.5">
 
 ### Launch and record output of the path estimation nodes 
 Open a new terminal (#3) and launch the path estimation nodes. These will take the sensor messages from the robot, use them to estimate the robot's path and display the estimated path in rviz. 
@@ -190,7 +190,7 @@ Open a final terminal (#5) and start teleoperation.
     $ roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch 
     
 At this point, you should have 5 different terminals open at the same time, and your screen should look like this: 
-<img src="https://github.com/woodjosh/EMI-Internship/blob/master/TerminalsScreenshot.png">
+<img src="https://github.com/woodjosh/EMI-Internship/blob/master/images/TerminalsScreenshot.png">
 
 ### Shut everything down 
 In order to end the trial, things should be shut down in this order: 
