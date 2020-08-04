@@ -40,4 +40,11 @@
 
   <!-- visualize results --> 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_localization)/rviz/turtlebot_real_localization.rviz"/> 
+
+  <!-- Run recorded teleop velocity commands --> 
+  <node pkg="rosbag" type="play" name="rosplay" args="$(find my_pkgs)/velocity_commands/1m_circle_3min.bag" required="true"/> 
+
+  <!-- record outputs --> 
+  <node pkg="rosbag" type="record" name="rosrecord" args="-O $(find my_pkgs)/datasets/1m_circle_3.bag /localization/imu_enc /localization/orbslam /localization/vio"/> 
+
 </launch>

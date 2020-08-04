@@ -1,0 +1,8 @@
+<launch>
+  <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter">
+    <remap from="imu/data_raw" to="/gyro"/>    
+    <remap from="/imu/data" to="/imu2"/>    
+    <param name ="use_mag" value="false"/> 
+  </node>
+
+</launch>

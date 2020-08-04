@@ -66,7 +66,7 @@ odom_frame: odom            # Defaults to "odom" if unspecified
 base_link_frame: base_footprint # Defaults to "base_link" if unspecified
 world_frame: odom           # Defaults to the value of odom_frame if unspecified
 
-# Add odometry input (only for forward acceleration)
+# Add odometry input (only for forward velocity)
 odom0: /odom
 
 # x, y, z
@@ -74,27 +74,27 @@ odom0: /odom
 # vx, vy, vz, 
 # vroll, vpitch, vyaw, 
 # ax, ay, az. 
-odom0_config: [true,  false,  false,
+odom0_config: [false, false, false,
                false, false, false,
                true,  false, false,
                false, false, false,
-               true,  false, false]
-odom0_queue_size: 50
-odom0_nodelay: true
+               false, false, false]
+odom0_queue_size: 10
+odom0_nodelay: false
 odom0_relative: true
 odom0_differential: false
 
-# Add imu input
+# Add imu input (only for heading angle)
 imu0: /imu
 imu0_config: [false, false, false,
               false, false, true,
               false, false, false,
-              false, false, true,
+              false, false, false,
               false, false, false]
-imu0_queue_size: 50
-imu0_nodelay: true
-imu0_relative: false
-imu0_differential: true
+imu0_queue_size: 100
+imu0_nodelay: false
+imu0_relative: true
+imu0_differential: false
 imu0_remove_gravitational_acceleration: true
 
 # [ADVANCED] The process noise covariance matrix can be difficult to tune, and can vary for each application, so it is

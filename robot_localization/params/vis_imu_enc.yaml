@@ -20,13 +20,13 @@ odom0: /odom
 # vx, vy, vz, 
 # vroll, vpitch, vyaw, 
 # ax, ay, az. 
-odom0_config: [true,  false, false,
+odom0_config: [false, false, false,
                false, false, false,
                true,  false, false,
                false, false, false,
-               true,  false, false]
-odom0_queue_size: 50
-odom0_nodelay: true
+               false, false, false]
+odom0_queue_size: 10
+odom0_nodelay: false
 odom0_relative: true
 odom0_differential: false
 
@@ -35,12 +35,12 @@ imu0: /imu
 imu0_config: [false, false, false,
               false, false, true,
               false, false, false,
-              false, false, true,
+              false, false, false,
               false, false, false]
-imu0_queue_size: 50
+imu0_queue_size: 100
 imu0_nodelay: true
-imu0_relative: false
-imu0_differential: true
+imu0_relative: true
+imu0_differential: false
 imu0_remove_gravitational_acceleration: true
 
 
@@ -50,13 +50,13 @@ pose0: orb_slam2_mono/pose_cov_fusion
 pose0_config: [false, false, false,
                false, false, true,
                false, false, false,
-               false, false, true,
+               false, false, false,
                false, false, false]
 
 pose0_queue_size: 50
-pose0_nodelay: false
+pose0_nodelay: true
 pose0_relative: false
-pose0_differential: false
+pose0_differential: true
 
 # [ADVANCED] The process noise covariance matrix can be difficult to tune, and can vary for each application, so it is
 # exposed as a configuration parameter. This matrix represents the noise we add to the total error after each
