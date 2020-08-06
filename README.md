@@ -56,13 +56,13 @@ If build is complete, this section was successful
 
 To edit the firmware of the robot, first install the arduino IDE, clone the modified code from the github, make your edits, and upload to the robot. 
 1. Install the arduino IDE and relevant packages with sections 4.1.1-4.1.6 of [this tutorial](https://emanual.robotis.com/docs/en/parts/controller/opencr10/#arduino-ide). 
-1. Clone my github with the modified firmware into your Arduino workspace.
+1. Clone the [github with the firmware developed for EMI](https://github.com/woodjosh/Turtlebot-Firmware) into your Arduino workspace.
     ```
     $ cd ~/Arduino/
     $ git clone https://github.com/woodjosh/Turtlebot-Firmware 
     ```
 1. Make whatever changes are desired to the 3 files in the Turtlebot-Firmware folder. 
-1. Upload to the robot by connecting with microusb to the OpenCR board in the second layer of the turtlebot, opening the my_turtlebot3_core.ino document in the Arduino IDE and pressing the upload button. If `jump_to_fw` is displayed, the upload was successful. 
+1. Upload to the robot by connecting with micro-usb to the OpenCR board in the second layer of the turtlebot, opening the my_turtlebot3_core.ino document in the Arduino IDE and pressing the upload button. If `jump_to_fw` is displayed, the upload was successful. 
 
 ## Running Simulations  
 Running tests in simulation has 5 steps: 
