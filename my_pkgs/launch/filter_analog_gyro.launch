@@ -1,7 +1,13 @@
 <launch>
-  <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter">
-    <remap from="imu/data_raw" to="/gyro"/>    
-    <remap from="/imu/data" to="/imu2"/>    
+  <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter_CRS03">
+    <remap from="imu/data_raw" to="/CRS03"/>    
+    <remap from="/imu/data" to="/CRS03_Fused"/>    
+    <param name ="use_mag" value="false"/> 
+  </node>
+
+  <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter_CRS09">
+    <remap from="imu/data_raw" to="/CRS09"/>    
+    <remap from="/imu/data" to="/CRS09_Fused"/>    
     <param name ="use_mag" value="false"/> 
   </node>
 

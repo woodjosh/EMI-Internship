@@ -123,7 +123,7 @@ Visualization Manager:
         Shaft Length: 0.10000000149011612
         Shaft Radius: 0.019999999552965164
         Value: Arrow
-      Topic: /localization/orbslam
+      Topic: /localization/CRS03_enc
       Unreliable: false
       Value: true
     - Angle Tolerance: 0.10000000149011612
@@ -157,7 +157,7 @@ Visualization Manager:
         Shaft Length: 0.10000000149011612
         Shaft Radius: 0.019999999552965164
         Value: Arrow
-      Topic: /localization/vio
+      Topic: /localization/CRS09_enc
       Unreliable: false
       Value: true
   Enabled: true

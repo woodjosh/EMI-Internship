@@ -7,7 +7,10 @@
   <!-- decompress images from the turtlebot --> 
   <node pkg="image_transport" type="republish" name="compressed_to_raw"
     args="compressed in:=/raspicam_node/image/ raw out:=/camera/image_raw" />
-
+<?ignore
+  <!-- use complementary filter with analog gyros and the built in imu -->
+  <include file="$(find my_pkgs)/launch/filter_analog_gyro.launch"/>
+?>
   <!-- launch orb_slam2 -->
   <include file="$(find orb_slam2_ros)/ros/launch/orb_slam2_raspi_mono.launch"/>
 
@@ -26,6 +29,21 @@
     <rosparam command="load" file="$(find robot_localization)/params/imu_enc.yaml" />
   </node> 
 
+  <!-- imu + encoder estimate of the position -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_CRS03_enc" clear_params="true">
+    <remap from="/imu" to="/CRS03"/>
+    <remap from="/odometry/filtered" to="/localization/CRS03_enc"/>
+    <rosparam command="load" file="$(find robot_localization)/params/imu_enc.yaml" />
+  </node> 
+
+  <!-- imu + encoder estimate of the position -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_CRS09_enc" clear_params="true">
+    <remap from="/imu" to="/CRS09"/>
+    <remap from="/odometry/filtered" to="/localization/CRS09_enc"/>
+    <rosparam command="load" file="$(find robot_localization)/params/imu_enc.yaml" />
+  </node> 
+
+<?ignore
   <!-- camera estimate of the position -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_orbslam" clear_params="true">
     <remap from="/odometry/filtered" to="/localization/orbslam"/>
@@ -37,14 +55,14 @@
     <remap from="/odometry/filtered" to="/localization/vio"/>
     <rosparam command="load" file="$(find robot_localization)/params/vis_imu_enc.yaml" />
   </node> 
-
+?>
   <!-- visualize results --> 
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot_localization)/rviz/turtlebot_real_localization.rviz"/> 
-
+<?ignore
   <!-- Run recorded teleop velocity commands --> 
   <node pkg="rosbag" type="play" name="rosplay" args="$(find my_pkgs)/velocity_commands/1m_circle_3min.bag" required="true"/> 
 
   <!-- record outputs --> 
   <node pkg="rosbag" type="record" name="rosrecord" args="-O $(find my_pkgs)/datasets/1m_circle_3.bag /localization/imu_enc /localization/orbslam /localization/vio"/> 
-
+?>
 </launch>
